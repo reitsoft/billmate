@@ -1,5 +1,5 @@
 <script>
-	import { P } from 'flowbite-svelte';
+	import { P } from "flowbite-svelte";
 </script>
 
 <div class="p-8">

@@ -1,9 +1,9 @@
 <script>
-	import { Alert, P } from 'flowbite-svelte';
+	import { Alert, P } from "flowbite-svelte";
 </script>
 
 <div class="p-8">
-  <P size="3xl" height="relaxed" class="max-w-lg" weight="semibold">Start</P>
+	<P size="3xl" height="relaxed" class="max-w-lg" weight="semibold">Start</P>
 	<Alert border color="blue">
 		<span slot="icon"
 			><svg
