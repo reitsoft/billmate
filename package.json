@@ -3,7 +3,8 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"vite": "vite dev",
+		"dev": "npm run vite -- --host --port 3333",
 		"build": "vite build",
 		"preview": "vite preview",
 		"test:unit": "vitest",

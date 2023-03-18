@@ -1,20 +1,24 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
-model Kunde {
-  id Int @id @default(autoincrement())
-  nummer String
-  name String
-  adresse String
-  plz String
-  ort String
+generator client {
+  provider = "prisma-client-js"
+}
+model Kunden {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  nummer    String
+  firma     String
+  anrede    String
+  vorname   String
+  nachname  String
+  mobil     String
+  email     String
+  adresse   String
+  ort       String
+  createdAt DateTime @default(now())
 }
