@@ -1,6 +1,7 @@
 {
 	"name": "billmate",
 	"version": "0.0.1",
+	"author": "Alex Reit",
 	"private": true,
 	"scripts": {
 		"vite": "vite dev",
