@@ -3,6 +3,7 @@
 
 	export let data;
 	$: ({ kunde } = data);
+	console.log(data)
 </script>
 
 <div class="py-8">
@@ -17,7 +18,7 @@
 		</div>
 
 		<div class="col-start-11 col-span-2 grid justify-items-end">
-			<Button outline href={`/kunden/${kunde.id}`}>Kunden bearbeiten</Button>
+			<Button outline href={`/kunden/bearbeiten/${kunde.id}`}>Kunden bearbeiten</Button>
 		</div>
 
 		<div class="col-start-1 col-span-12">

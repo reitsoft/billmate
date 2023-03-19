@@ -2,7 +2,6 @@
 	import {
 		P,
 		Button,
-		Table,
 		TableBody,
 		TableBodyCell,
 		TableBodyRow,
@@ -14,7 +13,6 @@
 	let searchTerm = "";
 	export let data;
 	$: ({ kunden } = data);
-
 	$: filteredKunden = kunden.filter((kunde) => kunde.vorname.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
 </script>
 
@@ -37,7 +35,7 @@
 			<TableHeadCell>Email</TableHeadCell>
 			<TableHeadCell>Details</TableHeadCell>
 		</TableHead>
-		<TableBody class="divide-y">
+		<TableBody>
 			{#each filteredKunden as kunde}
 				<TableBodyRow>
 					<TableBodyCell>{kunde.nummer}</TableBodyCell>

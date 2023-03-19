@@ -22,3 +22,10 @@ model Kunden {
   ort       String
   createdAt DateTime @default(now())
 }
+
+model Einheiten {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  bezeichnung   String
+  abkuerzung    String
+  createdAt     DateTime  @default(now())
+}

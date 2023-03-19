@@ -10,7 +10,7 @@ export const actions = {
 
 		try {
 			const nanoid = customAlphabet("123456789", 10);
-			await prisma.kunde.create({
+			await prisma.kunden.create({
 				data: {
 					nummer: nanoid(),
 					firma: firma ? firma : "",

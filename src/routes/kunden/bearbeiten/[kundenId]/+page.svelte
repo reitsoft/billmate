@@ -9,8 +9,6 @@
 
 	export let data;
 	$: ({ kunde } = data);
-	// selected = kunde.anrede;
-	console.log(kunde);
 </script>
 
 <div class="py-8">
