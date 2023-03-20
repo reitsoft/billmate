@@ -11,7 +11,7 @@
 		</div>
 		<div class="col-start-1 col-span-8">
 			{#each einheiten as einheit}
-				{einheit.bezeichnung} - {einheit.abkuerzung} <br>
+				{einheit.bezeichnung} - {einheit.abkuerzung} <br />
 			{/each}
 		</div>
 		<div class="col-span-3 col-start-10">

@@ -42,7 +42,7 @@
 			<div class="col-start-1 col-span-1">
 				<Label for="adresse" class="mb-2">Straße</Label>
 				<Input type="text" id="adresse" name="adresse" placeholder="Musterstraße 1" value={kunde.adresse} required />
-      </div>
+			</div>
 			<div class="col-start-2 col-span-1">
 				<Label for="ort" class="mb-2">PLZ Ort</Label>
 				<Input type="text" id="ort" name="ort" placeholder="12345 Musterstadt" value={kunde.ort} required />

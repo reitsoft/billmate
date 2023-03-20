@@ -1,4 +1,5 @@
 import { prisma } from "$lib/server/prisma";
+import { fail } from "@sveltejs/kit";
 
 export const load = async () => {
 	return {
