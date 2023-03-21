@@ -26,7 +26,7 @@ const userSchema = z.object({
 		.string({ required_error: "Postleitzahl und Ort sind erforderlich." })
 		.max(48, { message: "Maxmimal 48 Buchstaben." })
 		.trim(),
-	mobil: z.string().max(12).trim(),
+	mobil: z.string().trim(),
 	email: z
 		.string({ required_error: "Email Adresse ist erforderlich." })
 		.max(48, { message: "Maxmimal 48 Buchstaben." })
@@ -56,16 +56,14 @@ export const actions = {
 				}
 			});
 		} catch (error) {
+			console.log({error})
 			const { fieldErrors: errors } = error.flatten();
-			// return fail(500, { message: "Kunde konnte nicht erstellt werden." });
 			return {
 				data: formData,
 				errors
 			};
 		}
+		
 		throw redirect(303, "/kunden");
-		// return {
-		// 	status: 201
-		// };
 	}
 };

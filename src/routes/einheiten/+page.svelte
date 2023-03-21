@@ -1,4 +1,5 @@
 <script>
+	import { enhance } from "$app/forms";
 	import { P, Card, Button, Label, Input, Checkbox } from "flowbite-svelte";
 	export let data;
 	$: ({ einheiten } = data);
@@ -16,7 +17,7 @@
 		</div>
 		<div class="col-span-3 col-start-10">
 			<Card>
-				<form class="flex flex-col space-y-6" action="?/createEinheit" method="POST">
+				<form class="flex flex-col space-y-6" action="?/createEinheit" method="POST" use:enhance>
 					<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Neue Einheit hinzufügen</h3>
 					<Label class="space-y-2">
 						<span>Bezeichnung</span>

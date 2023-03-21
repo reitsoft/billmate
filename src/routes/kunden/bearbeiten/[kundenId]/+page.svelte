@@ -1,4 +1,5 @@
 <script>
+	import { enhance } from "$app/forms";
 	import { P, Button, Input, Label, Helper, Select } from "flowbite-svelte";
 
 	let selected;
@@ -18,7 +19,7 @@
 		</div>
 	</div>
 
-	<form class="py-8" action="?/updateKunde" method="POST">
+	<form class="py-8" action="?/updateKunde" method="POST" use:enhance>
 		<div class="grid gap-6 mb-6 md:grid-cols-3">
 			<div class="col-start-1 col-span-1">
 				<Label for="firma" class="mb-2">Firma</Label>

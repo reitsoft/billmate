@@ -1,10 +1,11 @@
+import { redirect } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
 import { error } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
 
 export const load = async ({ params }) => {
 	const getKunde = async () => {
-		const kunde = await prisma.kunden.findUnique({ where: { id: params.kundenId } });
+		const kunde = await prisma.kunden.findUnique({ where: { id: Number(params.kundenId) } });
 		if (!kunde) {
 			throw error(404, "Kunde nicht gefunden.");
 		}
@@ -23,7 +24,7 @@ export const actions = {
 
 		try {
 			await prisma.kunden.update({
-				where: { id: params.kundenId },
+				where: { id: Number(params.kundenId) },
 				data: {
 					firma,
 					anrede,
@@ -39,5 +40,6 @@ export const actions = {
 			console.log(error);
 			return fail(500, "Kundendaten konnten nicht aktualisiert werden.");
 		}
+		throw redirect(303, "/kunden");
 	}
 };

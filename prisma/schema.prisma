@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+      provider = "sqlite"
+    url      = "file:./db.sqlite"
 }
 
 generator client {
@@ -11,7 +11,7 @@ generator client {
 }
 
 model Kunden {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        Int    @id @default(autoincrement())
   nummer    String
   firma     String
   anrede    String
@@ -25,7 +25,7 @@ model Kunden {
 }
 
 model Einheiten {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int    @id @default(autoincrement())
   bezeichnung   String
   abkuerzung    String
   createdAt     DateTime  @default(now())
