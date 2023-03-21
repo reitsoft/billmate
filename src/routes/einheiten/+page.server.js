@@ -25,5 +25,21 @@ export const actions = {
 		return {
 			status: 201
 		};
+	},
+	deleteEinheit: async ({ url }) => {
+		const id = url.searchParams.get("id");
+
+		if(!id) {
+			return fail(404, { message: "Einheit nicht gefunden." });
+		}
+		try {
+			await prisma.einheiten.delete({where:{ id: Number(id) }})
+		} catch (error) {
+			console.error(error)
+			return fail(500, { message: "Etwas ist schief gelaufen." });
+		}
+		return{
+			status: 200
+		}
 	}
 };
