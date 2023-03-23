@@ -15,7 +15,6 @@
 
 	export let data;
 	$: ({ kunde } = data);
-	console.log(data);
 </script>
 
 <Breadcrumb class="mt-8 mb-4">

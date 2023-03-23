@@ -1,45 +1,41 @@
-import { redirect } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
-import { error } from "@sveltejs/kit";
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import { superValidate } from "sveltekit-superforms/server";
+import kundeSchema from "$lib/validation/kundeSchema";
 
-export const load = async ({ params }) => {
+export const load = async (event) => {
+	let form = await superValidate(event, kundeSchema);
 	const getKunde = async () => {
-		const kunde = await prisma.kunden.findUnique({ where: { id: Number(params.kundenId) } });
+		const kunde = await prisma.kunden.findUnique({ where: { id: Number(event.params.kundenId) } });
+
 		if (!kunde) {
-			throw error(404, "Kunde nicht gefunden.");
+			throw fail(404, "Kunde nicht gefunden.");
 		}
-		return kunde;
+		return { kunde };
 	};
-	return {
-		kunde: getKunde()
-	};
+	const { kunde } = await getKunde();
+	form.data = kunde;
+	return { form };
 };
 
 export const actions = {
-	updateKunde: async ({ request, params }) => {
-		const { firma, anrede, vorname, nachname, adresse, ort, mobil, email } = Object.fromEntries(
-			await request.formData()
-		);
+	updateKunde: async (event) => {
+		const form = await superValidate(event, kundeSchema);
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
 
 		try {
 			await prisma.kunden.update({
-				where: { id: Number(params.kundenId) },
-				data: {
-					firma,
-					anrede,
-					vorname,
-					nachname,
-					adresse,
-					ort,
-					mobil,
-					email
-				}
+				where: { id: Number(event.params.kundenId) },
+				data: form.data
 			});
 		} catch (error) {
 			console.log(error);
 			return fail(500, "Kundendaten konnten nicht aktualisiert werden.");
 		}
+
 		throw redirect(303, "/kunden");
 	}
 };

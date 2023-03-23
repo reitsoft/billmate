@@ -11,10 +11,7 @@ export const load = async (event) => {
 		if (!einheit) {
 			return fail(404, "Einheit nicht gefunden.");
 		}
-
-		return {
-			einheit
-		};
+		return { einheit };
 	};
 	const { einheit } = await getEinheit();
 	form.data = einheit;
@@ -29,6 +26,7 @@ export const actions = {
 			return fail(400, { form });
 		}
 
+		console.log({ ...form.data });
 		try {
 			await prisma.einheiten.update({
 				where: { id: Number(event.params.einheitId) },
@@ -36,33 +34,9 @@ export const actions = {
 			});
 		} catch (error) {
 			console.log(error);
-			return fail(500, { message: "Einheit konnte nicht erstellt werden." });
+			return fail(500, { message: "Einheit konnte nicht aktualisiert werden." });
 		}
 
 		throw redirect(303, "/einheiten");
-
-		// const { firma, anrede, vorname, nachname, adresse, ort, mobil, email } = Object.fromEntries(
-		// 	await request.formData()
-		// );
-
-		// try {
-		// 	await prisma.kunden.update({
-		// 		where: { id: Number(params.kundenId) },
-		// 		data: {
-		// 			firma,
-		// 			anrede,
-		// 			vorname,
-		// 			nachname,
-		// 			adresse,
-		// 			ort,
-		// 			mobil,
-		// 			email
-		// 		}
-		// 	});
-		// } catch (error) {
-		// 	console.log(error);
-		// 	return fail(500, "Kundendaten konnten nicht aktualisiert werden.");
-		// }
-		// throw redirect(303, "/kunden");
 	}
 };

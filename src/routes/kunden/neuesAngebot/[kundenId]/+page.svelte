@@ -1,15 +1,19 @@
 <script>
-	import { P, Button, Input, Label, Helper, Select } from "flowbite-svelte";
+	import { P, Button, Input, Label, Helper, Select, Breadcrumb, BreadcrumbItem, Heading } from "flowbite-svelte";
 
 	export let data;
 	$: ({ kunde } = data);
+
 </script>
 
-<div class="py-8">
-	<div class="grid grid-cols-12 gap-0">
-		<div class="col-start-1 col-span-8">
-			<P size="xl" height="relaxed" class="max-w-lg" weight="semibold">Neues Angebot</P>
-		</div>
-		{kunde.firma}
-	</div>
+<Breadcrumb class="mt-8 mb-4">
+	<BreadcrumbItem href="/" home>Start</BreadcrumbItem>
+	<BreadcrumbItem href="/kunden">Kunden</BreadcrumbItem>
+	<BreadcrumbItem href={`/kunden/details/${kunde.id}`}>{`Details: ${kunde.firma || kunde.vorname + " " + kunde.nachname}`}</BreadcrumbItem>
+	<BreadcrumbItem>Neues Angebot</BreadcrumbItem>
+</Breadcrumb>
+<div class="flex mb-8">
+	<Heading tag="h2">Neues Angebot</Heading>
 </div>
+
+{kunde.firma}
