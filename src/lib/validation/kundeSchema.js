@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export default z.object({
 	firma: z.string().max(48, { message: "Maxmimal 48 Buchstaben." }).trim(),
-	anrede: z.enum(["Herr", "Frau", "Familie", "Herr und Frau"], {
-		required_error: "Bitte die Anrede wählen."
+	anrede: z.enum(["Herr", "Frau"], {
+		errorMap: () => ({ message: "Bitte die Anrede auswählen." }) 
 	}),
 	vorname: z
 		.string({ required_error: "Vorname ist erforderlich." })
@@ -16,7 +16,6 @@ export default z.object({
 		.max(48, { message: "Maxmimal 48 Buchstaben." })
 		.trim(),
 	adresse: z
-  
 		.string({ required_error: "Adresse ist erforderlich." })
 		.max(48, { message: "Maxmimal 48 Buchstaben." })
 		.trim(),

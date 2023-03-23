@@ -1,11 +1,11 @@
 import { prisma } from "$lib/server/prisma";
+import { fail } from "@sveltejs/kit";
 
 export const load = async () => {
 	return {
 		kunden: await prisma.kunden.findMany({
-			orderBy: {
-				createdAt: "desc"
-			}
+			where: { geloescht: false },
+			orderBy: { createdAt: "desc" }
 		})
 	};
 };

@@ -58,7 +58,7 @@
 			</div>
 		</div>
 
-		<Button type="submit">Aktualisieren</Button>
-		<Button class="ml-4" color="light" href="/kunden">Abbrechen</Button>
+		<Button type="submit">Speichern</Button>
+		<Button class="ml-4" color="light" href={`/kunden/details/${kunde.id}`}>Abbrechen</Button>
 	</form>
 </div>

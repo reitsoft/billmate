@@ -1,39 +1,36 @@
-import { redirect } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
+import { fail, redirect } from "@sveltejs/kit";
 import { customAlphabet } from "nanoid";
-import kundeSchema from "$lib/validation/kundeSchema"
+import { superValidate } from "sveltekit-superforms/server";
+import kundeSchema from "$lib/validation/kundeSchema";
+
+export const load = async (event) => {
+	const form = await superValidate(event, kundeSchema);
+	return {
+		form,
+		kunden: await prisma.kunden.findMany({})
+	};
+};
 
 export const actions = {
-	createKunde: async ({ request }) => {
-		const formData = Object.fromEntries(await request.formData());
+	createKunde: async (event) => {
+		const form = await superValidate(event, kundeSchema);
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
 
 		try {
-			const result = kundeSchema.parse(formData);
-			console.log(result);
-			const { firma, anrede, vorname, nachname, adresse, ort, mobil, email } = formData;
 			const nanoid = customAlphabet("123456789", 4);
+			const nummer = nanoid() + "-" + nanoid();
 			await prisma.kunden.create({
-				data: {
-					nummer: nanoid() + "-" + nanoid(),
-					firma: firma ? firma : "",
-					anrede,
-					vorname,
-					nachname,
-					mobil,
-					email,
-					adresse,
-					ort
-				}
+				data: { ...form.data, nummer }
 			});
 		} catch (error) {
-			console.log({error})
-			const { fieldErrors: errors } = error.flatten();
-			return {
-				data: formData,
-				errors
-			};
+			console.log(error);
+			return fail(500, { message: "Kunde konnte nicht erstellt werden." });
 		}
-		
+
 		throw redirect(303, "/kunden");
 	}
 };

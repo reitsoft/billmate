@@ -21,6 +21,7 @@ model Kunden {
   email     String
   adresse   String
   ort       String
+  geloescht Boolean @default(false)
   createdAt DateTime @default(now())
 }
 

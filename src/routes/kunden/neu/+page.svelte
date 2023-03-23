@@ -1,6 +1,7 @@
 <script>
-	import { enhance } from "$app/forms";
-	import { P, Button, Input, Label, Helper, Select } from "flowbite-svelte";
+	import { Button, Input, Label, Helper, Select, Breadcrumb, BreadcrumbItem, Heading } from "flowbite-svelte";
+	import { superForm } from "sveltekit-superforms/client";
+	import kundeSchema from "$lib/validation/kundeSchema";
 
 	let selected;
 	let anreden = [
@@ -8,133 +9,152 @@
 		{ value: "Frau", name: "Frau" }
 	];
 
-	export let form;
-	console.log(form);
+	export let data;
+	const { form, errors, enhance, constraints } = superForm(data.form, {
+		validators: kundeSchema
+	});
 </script>
 
-<div class="py-8">
-	<div class="grid grid-cols-1 gap-0">
-		<div class="col-start-1 col-span-1">
-			<P size="3xl" height="relaxed" class="max-w-lg" weight="semibold">Neuer Kunde</P>
+<Breadcrumb class="mt-8 mb-4">
+	<BreadcrumbItem href="/" home>Start</BreadcrumbItem>
+	<BreadcrumbItem href="/kunden">Kunden</BreadcrumbItem>
+	<BreadcrumbItem>Neuer Kunde</BreadcrumbItem>
+</Breadcrumb>
+<div class="flex mb-8">
+	<Heading tag="h2">Neuer Kunde</Heading>
+</div>
+
+<form action="?/createKunde" method="POST" novalidate use:enhance>
+	<div class="grid gap-6 mb-6 grid-cols-12">
+		<div class="col-start-1 col-span-3">
+			<Label for="firma" color={$errors?.firma ? "red" : "base"} class="mb-2">Firma</Label>
+			<Input
+				type="text"
+				id="firma"
+				name="firma"
+				placeholder="z.B.: Bau GmbH"
+				color={$errors?.firma ? "red" : "base"}
+				bind:value={$form.firma}
+				{...$constraints.firma}
+			/>
+			<Helper class="text-sm">Nur wenn der Kunde eine Firma ist.</Helper>
+			{#if $errors?.firma}
+				<Helper class="mt-2" color="red">{$errors.firma}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-1 col-span-3">
+			<Label for="anrede" color={$errors?.anrede ? "red" : "base"}>Anrede auswählen...</Label>
+			<Select
+				class="mt-2"
+				id="anrede"
+				name="anrede"
+				color={$errors?.anrede ? "red" : "base"}
+				items={anreden}
+				bind:value={$form.anrede}
+				{...$constraints.anrede}
+				required
+			/>
+			{#if $errors?.anrede}
+				<Helper class="mt-2" color="red">{$errors.anrede}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-1 col-span-3">
+			<Label for="vorname" color={$errors?.vorname ? "red" : "base"} class="mb-2">Vorname</Label>
+			<Input
+				type="text"
+				id="vorname"
+				name="vorname"
+				placeholder="z.B.: Max"
+				color={$errors?.vorname ? "red" : "base"}
+				bind:value={$form.vorname}
+				{...$constraints.vorname}
+				required
+			/>
+			{#if $errors?.vorname}
+				<Helper class="mt-2" color="red">{$errors.vorname}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-4 col-span-3">
+			<Label for="nachname" color={$errors?.nachname ? "red" : "base"} class="mb-2">Nachname</Label>
+			<Input
+				type="text"
+				id="nachname"
+				name="nachname"
+				placeholder="z.B.: Mustermann"
+				color={$errors?.nachname ? "red" : "base"}
+				bind:value={$form.nachname}
+				{...$constraints.nachname}
+				required
+			/>
+			{#if $errors?.nachname}
+				<Helper class="mt-2" color="red">{$errors.nachname}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-1 col-span-3">
+			<Label for="adresse" color={$errors?.adresse ? "red" : "base"} class="mb-2">Straße, Hausnr.</Label>
+			<Input
+				type="text"
+				id="adresse"
+				name="adresse"
+				placeholder="z.B.: Musterstraße 1"
+				color={$errors?.adresse ? "red" : "base"}
+				bind:value={$form.adresse}
+				{...$constraints.adresse}
+				required
+			/>
+			{#if $errors?.adresse}
+				<Helper class="mt-2" color="red">{$errors.adresse}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-4 col-span-3">
+			<Label for="ort" color={$errors?.ort ? "red" : "base"} class="mb-2">PLZ Ort</Label>
+			<Input
+				type="text"
+				id="ort"
+				name="ort"
+				placeholder="z.B: 12345 Musterstadt"
+				color={errors?.ort ? "red" : "base"}
+				bind:value={$form.ort}
+				{...$constraints.ort}
+				required
+			/>
+			{#if $errors?.ort}
+				<Helper class="mt-2" color="red">{errors.ort}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-1 col-span-3">
+			<Label for="mobil" color={$errors?.mobil ? "red" : "base"} class="mb-2">Telefon Mobil</Label>
+			<Input
+				type="text"
+				id="mobil"
+				name="mobil"
+				placeholder="z.B.: +49 171 12345678"
+				color={$errors?.mobil ? "red" : "base"}
+				bind:value={$form.mobil}
+				{...$constraints.mobil}
+			/>
+			{#if $errors?.mobil}
+				<Helper class="mt-2" color="red">{$errors.mobil}</Helper>
+			{/if}
+		</div>
+		<div class="col-start-4 col-span-3">
+			<Label for="email" color={$errors?.email ? "red" : "base"} class="mb-2">Email</Label>
+			<Input
+				type="email"
+				id="email"
+				name="email"
+				placeholder="z.B.: john.doe@company.com"
+				color={$errors?.email ? "red" : "base"}
+				bind:value={$form.email}
+				{...$constraints.email}
+				required
+			/>
+			{#if $errors?.email}
+				<Helper class="mt-2" color="red">{$errors.email}</Helper>
+			{/if}
 		</div>
 	</div>
 
-	<form class="py-8" action="?/createKunde" method="POST" novalidate use:enhance>
-		<div class="grid gap-6 mb-6 md:grid-cols-3">
-			<div class="col-start-1 col-span-1">
-				<Label for="firma" color={form?.errors?.firma ? "red" : "base"} class="mb-2">Firma</Label>
-				<Input
-					type="text"
-					id="firma"
-					name="firma"
-					placeholder="Bau GmbH"
-					color={form?.errors?.firma ? "red" : "base"}
-					value={form?.data?.firma ?? ""}
-				/>
-				<Helper class="text-sm">Nur wenn der Kunde eine Firma ist.</Helper>
-				{#if form?.errors?.firma}
-					<Helper class="mt-2" color="red">{form?.errors?.firma[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-1 col-span-1">
-				<Label for="anrede" color={form?.errors?.anrede ? "red" : "base"}>Anrede auswählen...</Label>
-				<Select class="mt-2" id="anrede" name="anrede" items={anreden} bind:value={selected} />
-				{#if form?.errors?.anrede}
-					<Helper class="mt-2" color="red">{form?.errors?.anrede[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-1 col-span-1">
-				<Label for="vorname" color={form?.errors?.vorname ? "red" : "base"} class="mb-2">Vorname</Label>
-				<Input
-					type="text"
-					id="vorname"
-					name="vorname"
-					placeholder="Max"
-					color={form?.errors?.vorname ? "red" : "base"}
-					value={form?.data?.vorname ?? ""}
-					required
-				/>
-				{#if form?.errors?.vorname}
-					<Helper class="mt-2" color="red">{form?.errors?.vorname[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-2 col-span-1">
-				<Label for="nachname" color={form?.errors?.nachname ? "red" : "base"} class="mb-2">Nachname</Label>
-				<Input
-					type="text"
-					id="nachname"
-					name="nachname"
-					placeholder="Mustermann"
-					color={form?.errors?.nachname ? "red" : "base"}
-					value={form?.data?.nachname ?? ""}
-					required
-				/>
-				{#if form?.errors?.nachname}
-					<Helper class="mt-2" color="red">{form?.errors?.nachname[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-1 col-span-1">
-				<Label for="adresse" color={form?.errors?.adresse ? "red" : "base"} class="mb-2">Straße, Hausnr.</Label>
-				<Input
-					type="text"
-					id="adresse"
-					name="adresse"
-					placeholder="Musterstraße 1"
-					color={form?.errors?.adresse ? "red" : "base"}
-					value={form?.data?.adresse ?? ""}
-					required
-				/>
-				{#if form?.errors?.adresse}
-					<Helper class="mt-2" color="red">{form?.errors?.adresse[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-2 col-span-1">
-				<Label for="ort" color={form?.errors?.ort ? "red" : "base"} class="mb-2">PLZ Ort</Label>
-				<Input
-					type="text"
-					id="ort"
-					name="ort"
-					placeholder="12345 Musterstadt"
-					color={form?.errors?.ort ? "red" : "base"}
-					value={form?.data?.ort ?? ""}
-					required
-				/>
-				{#if form?.errors?.ort}
-					<Helper class="mt-2" color="red">{form?.errors?.ort[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-1 col-span-1">
-				<Label for="mobil" color={form?.errors?.mobil ? "red" : "base"} class="mb-2">Telefon Mobil</Label>
-				<Input
-					type="text"
-					id="mobil"
-					name="mobil"
-					placeholder="+49 171 12345678"
-					color={form?.errors?.mobil ? "red" : "base"}
-					value={form?.data?.mobil ?? ""}
-				/>
-				{#if form?.errors?.mobil}
-					<Helper class="mt-2" color="red">{form?.errors?.mobil[0]}</Helper>
-				{/if}
-			</div>
-			<div class="col-start-2 col-span-1">
-				<Label for="email" color={form?.errors?.email ? "red" : "base"} class="mb-2">Email</Label>
-				<Input
-					type="email"
-					id="email"
-					name="email"
-					placeholder="john.doe@company.com"
-					color={form?.errors?.email ? "red" : "base"}
-					value={form?.data?.email ?? ""}
-					required
-				/>
-				{#if form?.errors?.email}
-					<Helper class="mt-2" color="red">{form?.errors?.email[0]}</Helper>
-				{/if}
-			</div>
-		</div>
-
-		<Button type="submit">Speichern</Button>
-		<Button class="ml-4" color="light" href="/kunden">Abbrechen</Button>
-	</form>
-</div>
+	<Button type="submit">Speichern</Button>
+	<Button class="ml-4" color="light" href="/kunden">Abbrechen</Button>
+</form>
