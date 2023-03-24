@@ -14,46 +14,47 @@
 		TableHeadCell
 	} from "flowbite-svelte";
 	let searchTerm = "";
+	import ArrayFilter from "$lib/utils/arrayFilter";
 	export let data;
-	$: ({ einheiten } = data);
-	$: filteredEinheiten = einheiten.filter(
-		(einheit) => einheit.bezeichnung.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-	);
+	$: ({ dienstleistungen } = data);
+	$: filteredDienstleistungen = ArrayFilter(dienstleistungen, searchTerm);
 </script>
 
 <Breadcrumb class="mt-8 mb-4">
 	<BreadcrumbItem href="/" home>Start</BreadcrumbItem>
-	<BreadcrumbItem>Einheiten</BreadcrumbItem>
+	<BreadcrumbItem>Dienstleistungen</BreadcrumbItem>
 </Breadcrumb>
 <div class="flex mb-8">
-	<Heading tag="h2">Einheiten</Heading>
+	<Heading tag="h2">Dienstleistungen</Heading>
 </div>
 
 <div class="grid grid-cols-12 gap-0">
 	<div class="col-start-1 col-span-2 mb-4">
 		<form class="flex gap-2"><Search size="md" placeholder="Suchen..." bind:value={searchTerm} /></form>
 	</div>
-	<div class="col-start-6 col-span-1">
-		<Button href="/einheiten/neu">Neue Einheit</Button>
+	<div class="col-start-11 col-span-2">
+		<Button href="/dienstleistungen/neu">Neue Dienstleiszung</Button>
 	</div>
-	<div class="col-start-1 col-span-6">
+	<div class="col-start-1 col-span-12">
 		<Table shadow>
 			<TableHead>
-				<TableHeadCell>Bezeichnung</TableHeadCell>
-				<TableHeadCell>Abkürzung</TableHeadCell>
+				<TableHeadCell>Name</TableHeadCell>
+				<TableHeadCell>Beschreibung</TableHeadCell>
+				<TableHeadCell>Stundensatz</TableHeadCell>
 				<TableHeadCell />
 				<TableHeadCell />
 			</TableHead>
 			<TableBody>
-				{#each filteredEinheiten as einheit}
+				{#each filteredDienstleistungen as dl}
 					<TableBodyRow>
-						<TableBodyCell>{einheit.bezeichnung}</TableBodyCell>
-						<TableBodyCell>{einheit.abkuerzung}</TableBodyCell>
+						<TableBodyCell>{dl.name}</TableBodyCell>
+						<TableBodyCell>{dl.beschreibung}</TableBodyCell>
+						<TableBodyCell>{dl.stundensatz}</TableBodyCell>
 						<TableBodyCell>
-							<Button outline color="blue" size="xs" href={`/einheiten/bearbeiten/${einheit.id}`}>Bearbeiten</Button>
+							<Button outline color="blue" size="xs" href={`/einheiten/bearbeiten/${dl.id}`}>Bearbeiten</Button>
 						</TableBodyCell>
 						<TableBodyCell>
-							<form method="POST" action="?/deleteEinheit&id={einheit.id}" use:enhance>
+							<form method="POST" action="?/deleteDienstleistung&id={dl.id}" use:enhance>
 								<Button outline color="red" size="xs" type="submit">Löschen</Button>
 							</form>
 						</TableBodyCell>

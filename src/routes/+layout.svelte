@@ -31,14 +31,9 @@
 			<NavLi href="/angebote" active={activeUrl === `/angebote`}>Angebote</NavLi>
 			<NavLi href="/rechnungen" active={activeUrl === `/rechnungen`}>Rechnungen</NavLi>
 			<NavLi href="/kunden" active={activeUrl === `/kunden`}>Kunden</NavLi>
-			<!-- <Dropdown triggeredBy="#kunden" class="w-44 z-20">
-				<DropdownItem href="/kunden" active={activeUrl === `/kunden`}>Alle Kunden</DropdownItem>
-				<DropdownDivider />
-				<DropdownItem href="/kontakte" active={activeUrl === `/kontakte`}>Kontakte</DropdownItem>
-			</Dropdown> -->
 			<NavLi id="komponenten" class="cursor-pointer"><Chevron aligned>Komponenten</Chevron></NavLi>
 			<Dropdown triggeredBy="#komponenten" class="w-44 z-20">
-				<DropdownItem href="/dienstleistung" active={activeUrl === `/dienstleistung`}>Dienstleistungen</DropdownItem>
+				<DropdownItem href="/dienstleistungen" active={activeUrl === `/dienstleistung`}>Dienstleistungen</DropdownItem>
 				<DropdownItem href="/material" active={activeUrl === `/material`}>Material</DropdownItem>
 				<DropdownDivider />
 				<DropdownItem href="/bereiche" active={activeUrl === `/bereiche`}>Bereiche</DropdownItem>

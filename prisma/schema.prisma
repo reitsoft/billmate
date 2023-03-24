@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-      provider = "sqlite"
-    url      = "file:./db.sqlite"
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
 }
 
 generator client {
@@ -30,4 +30,11 @@ model Einheiten {
   bezeichnung   String
   abkuerzung    String
   createdAt     DateTime  @default(now())
+}
+
+model Dienstleistungen {
+  id              Int    @id @default(autoincrement())
+  name            String
+  beschreibung    String
+  stundensatz     String @default("0.0")
 }

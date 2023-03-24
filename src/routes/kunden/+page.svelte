@@ -12,16 +12,17 @@
 		TableHeadCell,
 		Table
 	} from "flowbite-svelte";
+	import ArrayFilter from "$lib/utils/arrayFilter";
 
 	let searchTerm = "";
 	export let data;
 	$: ({ kunden } = data);
-	$: filteredKunden = kunden.filter((kunde) => kunde.vorname.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
+	$: filteredKunden = ArrayFilter(kunden, searchTerm);
 </script>
 
 <Breadcrumb class="mt-8 mb-4">
 	<BreadcrumbItem href="/" home>Start</BreadcrumbItem>
-	<BreadcrumbItem href="/kunden">Kunden</BreadcrumbItem>
+	<BreadcrumbItem>Kunden</BreadcrumbItem>
 </Breadcrumb>
 <div class="flex mb-8">
 	<Heading tag="h2">Kunden</Heading>
@@ -29,7 +30,7 @@
 
 <div class="grid grid-cols-12 gap-0">
 	<div class="col-start-1 col-span-2 mb-4">
-		<form class="flex gap-2"><Search size="md" bind:value={searchTerm} /></form>
+		<form class="flex gap-2"><Search size="md" placeholder="Suchen..." bind:value={searchTerm} /></form>
 	</div>
 	<div class="col-start-12 col-span-1">
 		<Button href="/kunden/neu">Neuer Kunde</Button>

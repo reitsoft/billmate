@@ -26,7 +26,6 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		console.log({ ...form.data });
 		try {
 			await prisma.einheiten.update({
 				where: { id: Number(event.params.einheitId) },

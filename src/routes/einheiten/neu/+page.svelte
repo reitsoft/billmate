@@ -21,7 +21,7 @@
 <form action="?/createEinheit" method="POST" novalidate use:enhance>
 	<div class="grid mb-6 grid-cols-12">
 		<div class="col-start-1 col-span-3">
-			<Label for="bezeichnung" color={$errors?.vorname ? "red" : "base"} class="mb-2">Bezeichnung</Label>
+			<Label for="bezeichnung" color={$errors?.bezeichnung ? "red" : "base"} class="mb-2">Bezeichnung</Label>
 			<Input
 				type="text"
 				id="bezeichnung"
@@ -37,7 +37,7 @@
 			{/if}
 		</div>
     <div class="col-start-1 col-span-3">
-			<Label for="abkuerzung" color={$errors?.vorname ? "red" : "base"} class="mt-4 mb-2">Abkürzung</Label>
+			<Label for="abkuerzung" color={$errors?.abkuerzung ? "red" : "base"} class="mt-4 mb-2">Abkürzung</Label>
 			<Input
 				type="text"
 				id="abkuerzung"
