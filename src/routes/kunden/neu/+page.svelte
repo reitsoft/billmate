@@ -3,7 +3,7 @@
 	import { superForm } from "sveltekit-superforms/client";
 	import kundeSchema from "$lib/validation/kundeSchema";
 
-	let anreden = [
+	const anreden = [
 		{ value: "Herr", name: "Herr" },
 		{ value: "Frau", name: "Frau" }
 	];

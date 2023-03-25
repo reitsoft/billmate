@@ -28,17 +28,15 @@
 		<NavHamburger on:click={toggle} />
 		<NavUl {hidden}>
 			<NavLi href="/" active={activeUrl === `/`}>Start</NavLi>
+			<NavLi href="/kunden" active={activeUrl === `/kunden`}>Kunden</NavLi>
 			<NavLi href="/angebote" active={activeUrl === `/angebote`}>Angebote</NavLi>
 			<NavLi href="/rechnungen" active={activeUrl === `/rechnungen`}>Rechnungen</NavLi>
-			<NavLi href="/kunden" active={activeUrl === `/kunden`}>Kunden</NavLi>
 			<NavLi id="komponenten" class="cursor-pointer"><Chevron aligned>Komponenten</Chevron></NavLi>
 			<Dropdown triggeredBy="#komponenten" class="w-44 z-20">
 				<DropdownItem href="/dienstleistungen" active={activeUrl === `/dienstleistung`}>Dienstleistungen</DropdownItem>
 				<DropdownItem href="/material" active={activeUrl === `/material`}>Material</DropdownItem>
 				<DropdownDivider />
-				<DropdownItem href="/bereiche" active={activeUrl === `/bereiche`}>Bereiche</DropdownItem>
 				<DropdownItem href="/einheiten" active={activeUrl === `/einheiten`}>Einheiten</DropdownItem>
-				<DropdownItem href="/aufgabenarten" active={activeUrl === `/aufgabenarten`}>Aufgabenarten</DropdownItem>
 			</Dropdown>
 		</NavUl>
 		<!-- <DarkMode /> -->

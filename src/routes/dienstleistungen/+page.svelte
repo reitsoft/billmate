@@ -51,7 +51,7 @@
 						<TableBodyCell>{dl.beschreibung}</TableBodyCell>
 						<TableBodyCell>{dl.stundensatz}</TableBodyCell>
 						<TableBodyCell>
-							<Button outline color="blue" size="xs" href={`/einheiten/bearbeiten/${dl.id}`}>Bearbeiten</Button>
+							<Button outline color="blue" size="xs" href={`/dienstleistungen/bearbeiten/${dl.id}`}>Bearbeiten</Button>
 						</TableBodyCell>
 						<TableBodyCell>
 							<form method="POST" action="?/deleteDienstleistung&id={dl.id}" use:enhance>

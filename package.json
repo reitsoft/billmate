@@ -11,7 +11,9 @@
 		"preview": "vite preview",
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"git": "git add . && git commit -m",
+  	"postgit": "git push origin main"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
