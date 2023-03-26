@@ -37,12 +37,12 @@
 		<Button href="/einheiten/neu">Neue Einheit</Button>
 	</div>
 	<div class="col-start-1 col-span-6">
-		<Table shadow>
+		<Table class="table-fixed" shadow>
 			<TableHead>
 				<TableHeadCell>Bezeichnung</TableHeadCell>
-				<TableHeadCell>Abkürzung</TableHeadCell>
-				<TableHeadCell />
-				<TableHeadCell />
+				<TableHeadCell class="w-36">Abkürzung</TableHeadCell>
+				<TableHeadCell class="w-36" />
+				<TableHeadCell class="w-36" />
 			</TableHead>
 			<TableBody>
 				{#each filteredEinheiten as einheit}

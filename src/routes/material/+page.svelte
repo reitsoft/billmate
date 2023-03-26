@@ -36,15 +36,14 @@
 		<Button href="/material/neu">Neues Material</Button>
 	</div>
 	<div class="col-start-1 col-span-12">
-		<Table shadow>
+		<Table class="table-fixed" shadow>
 			<TableHead>
-				<TableHeadCell>Name</TableHeadCell>
+				<TableHeadCell class="w-64">Name</TableHeadCell>
 				<TableHeadCell>Beschreibung</TableHeadCell>
-				<TableHeadCell>VPE</TableHeadCell>
-
-				<TableHeadCell>Preis</TableHeadCell>
-				<TableHeadCell />
-				<TableHeadCell />
+				<TableHeadCell class="w-40">VPE</TableHeadCell>
+				<TableHeadCell class="w-44 text-center">Preis</TableHeadCell>
+				<TableHeadCell class="w-36" />
+				<TableHeadCell class="w-36" />
 			</TableHead>
 			<TableBody>
 				{#each filteredMaterial as mat}
@@ -53,7 +52,7 @@
 						<TableBodyCell>{mat.beschreibung}</TableBodyCell>
 						<TableBodyCell>{`${mat.vpe} ${mat.einheit}`}</TableBodyCell>
 
-						<TableBodyCell>{mat.preis}</TableBodyCell>
+						<TableBodyCell class="text-center">{mat.preis}</TableBodyCell>
 						<TableBodyCell>
 							<Button outline color="blue" size="xs" href={`/material/bearbeiten/${mat.id}`}>Bearbeiten</Button>
 						</TableBodyCell>

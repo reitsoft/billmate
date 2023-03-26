@@ -36,14 +36,14 @@
 		<Button href="/kunden/neu">Neuer Kunde</Button>
 	</div>
 	<div class="col-start-1 col-span-12">
-		<Table shadow>
+		<Table class="table-fixed" shadow>
 			<TableHead>
-				<TableHeadCell>KdNr.</TableHeadCell>
-				<TableHeadCell>Firma</TableHeadCell>
+				<TableHeadCell class="w-40">KdNr.</TableHeadCell>
+				<TableHeadCell class="w-72">Firma</TableHeadCell>
 				<TableHeadCell>Kontakt</TableHeadCell>
-				<TableHeadCell>Telefon</TableHeadCell>
-				<TableHeadCell>Email</TableHeadCell>
-				<TableHeadCell>Details</TableHeadCell>
+				<TableHeadCell class="w-60">Telefon</TableHeadCell>
+				<TableHeadCell class="w-60">Email</TableHeadCell>
+				<TableHeadCell class="w-36"></TableHeadCell>
 			</TableHead>
 			<TableBody>
 				{#each filteredKunden as kunde}

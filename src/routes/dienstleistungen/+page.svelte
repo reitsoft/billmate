@@ -36,20 +36,20 @@
 		<Button href="/dienstleistungen/neu">Neue Dienstleiszung</Button>
 	</div>
 	<div class="col-start-1 col-span-12">
-		<Table shadow>
+		<Table class="table-fixed" shadow>
 			<TableHead>
-				<TableHeadCell>Name</TableHeadCell>
+				<TableHeadCell class="w-72">Name</TableHeadCell>
 				<TableHeadCell>Beschreibung</TableHeadCell>
-				<TableHeadCell>Stundensatz</TableHeadCell>
-				<TableHeadCell />
-				<TableHeadCell />
+				<TableHeadCell class="w-44 text-center">Stundensatz</TableHeadCell>
+				<TableHeadCell class="w-36" />
+				<TableHeadCell class="w-36" />
 			</TableHead>
 			<TableBody>
 				{#each filteredDienstleistungen as dl}
 					<TableBodyRow>
 						<TableBodyCell>{dl.name}</TableBodyCell>
 						<TableBodyCell>{dl.beschreibung}</TableBodyCell>
-						<TableBodyCell>{dl.stundensatz}</TableBodyCell>
+						<TableBodyCell class="text-center">{dl.stundensatz}</TableBodyCell>
 						<TableBodyCell>
 							<Button outline color="blue" size="xs" href={`/dienstleistungen/bearbeiten/${dl.id}`}>Bearbeiten</Button>
 						</TableBodyCell>
