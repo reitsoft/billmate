@@ -24,23 +24,40 @@ model Kunden {
 }
 
 model Angebote {
-  id           Int      @id @default(autoincrement())
-  Kunden       Kunden?  @relation(fields: [kundeId], references: [id])
+  id           Int           @id @default(autoincrement())
+  Kunden       Kunden?       @relation(fields: [kundeId], references: [id])
   kundeId      Int?
-  nummer       String   @unique
-  datum        DateTime @default(now())
+  nummer       String        @unique
+  datum        DateTime      @default(now())
+  komponenten  Komponenten[]
   angebotswert String
   beschreibung String
-  gueltigkeit  DateTime @default(now())
-  zuschlag     Boolean  @default(false)
-  abgerechnet  Boolean  @default(false)
+  gueltigkeit  DateTime      @default(now())
+  zuschlag     Boolean       @default(false)
+  abgerechnet  Boolean       @default(false)
+}
+
+model Komponenten {
+  id               Int               @id @default(autoincrement())
+  Angebote         Angebote?         @relation(fields: [angebotId], references: [id])
+  angebotId        Int?
+  name             String
+  beschreibung     String
+  preis            String
+  Dienstleistungen Dienstleistungen? @relation(fields: [dienstleistungId], references: [id])
+  dienstleistungId Int?
+  arbeitszeit      Int
+  Material         Material?         @relation(fields: [materialId], references: [id])
+  materialId       Int?
+  anzahl           Int
 }
 
 model Dienstleistungen {
-  id           Int    @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   name         String
   beschreibung String
-  stundensatz  String @default("0.0")
+  stundensatz  String        @default("0.0")
+  Komponenten  Komponenten[]
 }
 
 model Einheiten {
@@ -51,11 +68,12 @@ model Einheiten {
 }
 
 model Material {
-  id           Int      @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   name         String
   beschreibung String
-  vpe          String   @default("1")
+  vpe          String        @default("1")
   einheit      String
-  preis        String   @default("0.0")
-  createdAt    DateTime @default(now())
+  preis        String        @default("0.0")
+  createdAt    DateTime      @default(now())
+  Komponenten  Komponenten[]
 }

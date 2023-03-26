@@ -1,15 +1,13 @@
 import { prisma } from "$lib/server/prisma";
-import { error } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import { superValidate } from "sveltekit-superforms/server";
+import komponenteSchema from "$lib/validation/komponenteSchema";
 
-export const load = async ({ params }) => {
-	const getKunde = async () => {
-		const kunde = await prisma.kunden.findUnique({ where: { id: Number(params.kundenId) } });
-		if (!kunde) {
-			throw error(404, "Kunde nicht gefunden.");
-		}
-		return kunde;
-	};
+export const load = async (event) => {
 	return {
-		kunde: getKunde()
+		form: await superValidate(event, komponenteSchema),
+		kunde: await prisma.kunden.findUnique({ where: { id: Number(event.params.kundenId) } }),
+		dienstleistungen: await prisma.dienstleistungen.findMany({}),
+		material: await prisma.material.findMany({}),
 	};
 };
