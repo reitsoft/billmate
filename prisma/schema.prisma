@@ -30,8 +30,8 @@ model Angebote {
   nummer       String        @unique
   datum        DateTime      @default(now())
   komponenten  Komponenten[]
-  angebotswert String
-  beschreibung String
+  angebotswert String        @default("0,0")
+  beschreibung String        @default("")
   gueltigkeit  DateTime      @default(now())
   zuschlag     Boolean       @default(false)
   abgerechnet  Boolean       @default(false)
