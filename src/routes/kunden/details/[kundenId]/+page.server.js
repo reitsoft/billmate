@@ -35,16 +35,8 @@ export const actions = {
 			console.error(error);
 			return fail(500, { message: "Etwas ist schief gelaufen." });
 		}
-		return {
-			status: 200
-		};
 
-		// const neuesAngebot = await prisma.angebote.findMany({
-		// 	orderBy: {
-		// 		datum: "desc"
-		// 	},
-		// 	take: 1
-		// });
-		// throw redirect(303, `/angebote/neu&kunde=${id}&nagebot=${neuesAngebot.id}`);
+		const neuesAngebot = await prisma.angebote.findMany({ take: -1 });
+		throw redirect(303, `/angebote/neu/${neuesAngebot[0].id}`);
 	}
 };
