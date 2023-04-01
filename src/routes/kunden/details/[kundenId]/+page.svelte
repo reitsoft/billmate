@@ -9,6 +9,7 @@
 		Input,
 		Helper,
 		Modal,
+		Search,
 		Table,
 		TableHead,
 		TableHeadCell,
@@ -17,14 +18,21 @@
 		TableBodyRow
 	} from "flowbite-svelte";
 
-	let modalNeuesAngebotistOffen = false;
+	let modalNeuesAngebotIstOffen = false;
 	import { superForm } from "sveltekit-superforms/client";
 	import angebotSchema from "$lib/validation/angebotSchema";
+	import ArrayFilter from "$lib/utils/arrayFilter";
 
+	let searchAngebote = "";
+	let searchRechnungen = "";
 	export let data;
 	const { kunde } = data;
-	const { form, errors, enhance, constraints } = superForm(data.form, {
-		dataType: 'json',
+	$: ({ angebote } = data.kunde);
+	$: ({ rechnungen } = data.kunde);
+	$: filteredAngebote = ArrayFilter(angebote, searchAngebote);
+	$: filteredRechnungen = ArrayFilter(rechnungen, searchAngebote);
+	const { form, errors, enhance, constraints, message } = superForm(data.form, {
+		dataType: "json",
 		validators: angebotSchema
 	});
 </script>
@@ -38,90 +46,90 @@
 	<Heading tag="h2">{kunde.firma || kunde.anrede + " " + kunde.vorname + " " + kunde.nachname}</Heading>
 </div>
 
-<div class="grid grid-cols-12 gap-0">
-	<div class="col-start-9 col-span-2 grid justify-items-end mb-4">
-		<!-- <form method="POST" action="?/createAngebot&id={kunde.id}" use:enhance> -->
-			<Button on:click={() => (modalNeuesAngebotistOffen = true)}>Angebot erstellen</Button>
-		<!-- </form> -->
+{#if $message}
+	{$message}
+{:else}
+	<div class="grid grid-cols-12 gap-x-4">
+		<div class="col-start-1 col-span-2 mb-4">
+			<form class="flex gap-2"><Search size="md" placeholder="Suchen..." bind:value={searchAngebote} /></form>
+		</div>
+				<div class="col-start-7 col-span-2 mb-4">
+			<form class="flex gap-2"><Search size="md" placeholder="Suchen..." bind:value={searchRechnungen} /></form>
+		</div>
+		<div class="flex col-start-10 col-span-3 mb-4 justify-end">
+			<Button on:click={() => (modalNeuesAngebotIstOffen = true)}>Angebot erstellen</Button>
+			<Button class="ml-4" outline href={`/kunden/bearbeiten/${kunde.id}`}>Kunden bearbeiten</Button>
+		</div>
+		<div class="col-start-1 col-span-6">
+			<Table shadow>
+				<TableHead>
+					<TableHeadCell>Angebote</TableHeadCell>
+					<TableHeadCell>Preis</TableHeadCell>
+					<TableHeadCell>Actions</TableHeadCell>
+				</TableHead>
+				<TableBody>
+					{#each filteredAngebote as angebot}
+						<TableBodyRow>
+							<TableBodyCell>{angebot.beschreibung}</TableBodyCell>
+							<TableBodyCell>{angebot.angebotswert}</TableBodyCell>
+							<TableBodyCell>
+								<Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge>
+								<Badge href={`/kunden/details/${kunde.id}`} large color="green">Abrechnen</Badge>
+							</TableBodyCell>
+						</TableBodyRow>
+					{/each}
+				</TableBody>
+			</Table>
+		</div>
+		<div class="col-start-7 col-span-6">
+			<Table shadow>
+				<TableHead>
+					<TableHeadCell>Rechnungen</TableHeadCell>
+					<TableHeadCell>Preis</TableHeadCell>
+					<TableHeadCell>Action</TableHeadCell>
+					<TableHeadCell>Status</TableHeadCell>
+				</TableHead>
+				<TableBody>
+					<!-- {#each filteredRechnungen as rechnung} -->
+					<TableBodyRow>
+						<TableBodyCell>Gartenarbeit</TableBodyCell>
+						<TableBodyCell>987,45 €</TableBodyCell>
+						<TableBodyCell><Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge></TableBodyCell>
+						<TableBodyCell>
+							<Badge large color="green">Bezahlt</Badge>
+						</TableBodyCell>
+					</TableBodyRow>
+					<TableBodyRow>
+						<TableBodyCell>Abriss</TableBodyCell>
+						<TableBodyCell>123,45 €</TableBodyCell>
+						<TableBodyCell>
+							<Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge>
+						</TableBodyCell>
+						<TableBodyCell>
+							<Badge large color="red">Offen</Badge>
+						</TableBodyCell>
+					</TableBodyRow>
+					<!-- {/each} -->
+				</TableBody>
+			</Table>
+		</div>
 	</div>
 
-	<div class="col-start-11 col-span-2 grid justify-items-end mb-4">
-		<Button outline href={`/kunden/bearbeiten/${kunde.id}`}>Kunden bearbeiten</Button>
-	</div>
-	<div class="col-start-1 col-span-4">
-		<Table shadow>
-			<TableHead>
-				<TableHeadCell>Angebote</TableHeadCell>
-				<TableHeadCell>Preis</TableHeadCell>
-				<TableHeadCell>Actions</TableHeadCell>
-			</TableHead>
-			<TableBody>
-				<!-- {#each filteredKunden as kunde} -->
-				<TableBodyRow>
-					<TableBodyCell>Gartenarbeit</TableBodyCell>
-					<TableBodyCell>987,45 €</TableBodyCell>
-					<TableBodyCell>
-						<Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge>
-						<Badge href={`/kunden/details/${kunde.id}`} large color="green">Abrechnen</Badge>
-					</TableBodyCell>
-				</TableBodyRow>
-				<TableBodyRow>
-					<TableBodyCell>Abriss</TableBodyCell>
-					<TableBodyCell>123,45 €</TableBodyCell>
-					<TableBodyCell>
-						<Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge>
-						<Badge href={`/kunden/details/${kunde.id}`} large color="green">Abrechnen</Badge>
-					</TableBodyCell>
-				</TableBodyRow>
-				<TableBodyRow>
-					<TableBodyCell>Abdichten</TableBodyCell>
-					<TableBodyCell>123,45 €</TableBodyCell>
-					<TableBodyCell>
-						<Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge>
-						<Badge href={`/kunden/details/${kunde.id}`} large color="green">Abrechnen</Badge>
-					</TableBodyCell>
-				</TableBodyRow>
-				<!-- {/each} -->
-			</TableBody>
-		</Table>
-	</div>
-	<div class="col-start-6 col-span-4">
-		<Table shadow>
-			<TableHead>
-				<TableHeadCell>Rechnungen</TableHeadCell>
-				<TableHeadCell>Preis</TableHeadCell>
-				<TableHeadCell>Action</TableHeadCell>
-				<TableHeadCell>Status</TableHeadCell>
-			</TableHead>
-			<TableBody>
-				<!-- {#each filteredKunden as kunde} -->
-				<TableBodyRow>
-					<TableBodyCell>Gartenarbeit</TableBodyCell>
-					<TableBodyCell>987,45 €</TableBodyCell>
-					<TableBodyCell><Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge></TableBodyCell>
-					<TableBodyCell>
-						<Badge large color="green">Bezahlt</Badge>
-					</TableBodyCell>
-				</TableBodyRow>
-				<TableBodyRow>
-					<TableBodyCell>Abriss</TableBodyCell>
-					<TableBodyCell>123,45 €</TableBodyCell>
-					<TableBodyCell>
-						<Badge href={`/kunden/details/${kunde.id}`} large>Bearbeiten</Badge>
-					</TableBodyCell>
-					<TableBodyCell>
-						<Badge large color="red">Offen</Badge>
-					</TableBodyCell>
-				</TableBodyRow>
-				<!-- {/each} -->
-			</TableBody>
-		</Table>
-	</div>
-</div>
-
-<Modal title="Neues Angebot erstellen" bind:open={modalNeuesAngebotistOffen} size="md" autoclose={false} class="w-full">
-	<form class="flex flex-col space-y-6" action={`?/createAngebot&id=${kunde.id}`} method="POST" novalidate use:enhance>
-		<!-- <Label class="space-y-2" for="name" color={$errors?.name ? "red" : "base"}>Name</Label>
+	<Modal
+		title="Neues Angebot erstellen"
+		bind:open={modalNeuesAngebotIstOffen}
+		size="md"
+		autoclose={false}
+		class="w-full"
+	>
+		<form
+			class="flex flex-col space-y-6"
+			action={`?/createAngebot&id=${kunde.id}`}
+			method="POST"
+			novalidate
+			use:enhance
+		>
+			<!-- <Label class="space-y-2" for="name" color={$errors?.name ? "red" : "base"}>Name</Label>
 		<Input
 			type="text"
 			name="beschreibung"
@@ -135,20 +143,21 @@
 		{#if $errors?.name}
 			<Helper class="mt-2" color="red">{$errors.name}</Helper>
 		{/if} -->
-		<Label class="space-y-2" for="beschreibung" color={$errors?.beschreibung ? "red" : "base"}>Beschreibung</Label>
-		<Input
-			type="text"
-			name="beschreibung"
-			id="beschreibung"
-			placeholder="z.B.: Parketboden in Wohnzimmer entfernen."
-			color={$errors?.beschreibung ? "red" : "base"}
-			bind:value={$form.beschreibung}
-			{...$constraints.beschreibung}
-		/>
-		{#if $errors?.beschreibung}
-			<Helper class="mt-2" color="red">{$errors.beschreibung}</Helper>
-		{/if}
-		<Button type="submit">Speichhern</Button>
-		<Button color="light" on:click={() => (modalNeuesAngebotistOffen = false)}>Abbrechen</Button>
-	</form>
-</Modal>
+			<Label class="space-y-2" for="beschreibung" color={$errors?.beschreibung ? "red" : "base"}>Beschreibung</Label>
+			<Input
+				type="text"
+				name="beschreibung"
+				id="beschreibung"
+				placeholder="z.B.: Parketboden in Wohnzimmer entfernen."
+				color={$errors?.beschreibung ? "red" : "base"}
+				bind:value={$form.beschreibung}
+				{...$constraints.beschreibung}
+			/>
+			{#if $errors?.beschreibung}
+				<Helper class="mt-2" color="red">{$errors.beschreibung}</Helper>
+			{/if}
+			<Button type="submit">Speichhern</Button>
+			<Button color="light" on:click={() => (modalNeuesAngebotIstOffen = false)}>Abbrechen</Button>
+		</form>
+	</Modal>
+{/if}

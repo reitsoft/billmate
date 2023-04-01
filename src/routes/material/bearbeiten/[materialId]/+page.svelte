@@ -8,7 +8,7 @@
 	const einheitenSelect = einheiten.map(function ({ bezeichnung }) {
 		return { value: bezeichnung, name: bezeichnung };
 	});
-	const { form, errors, enhance, constraints } = superForm(data.form, {
+	const { form, errors, enhance, constraints, message } = superForm(data.form, {
 		validators: materialSchema
 	});
 </script>

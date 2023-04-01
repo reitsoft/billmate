@@ -8,20 +8,21 @@ generator client {
 }
 
 model Kunden {
-  id        Int        @id @default(autoincrement())
-  nummer    String     @unique
-  firma     String
-  anrede    String
-  vorname   String
-  nachname  String
-  mobil     String
-  email     String
-  adresse   String
-  ort       String
-  angebote  Angebote[]
-  geloescht Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id         Int          @id @default(autoincrement())
+  nummer     String       @unique
+  firma      String
+  anrede     String
+  vorname    String
+  nachname   String
+  mobil      String
+  email      String
+  adresse    String
+  ort        String
+  angebote   Angebote[]
+  rechnungen Rechnungen[]
+  geloescht  Boolean      @default(false)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
 model Angebote {
@@ -86,4 +87,12 @@ model Material {
   Komponenten  Komponenten[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+}
+
+model Rechnungen {
+  id          Int           @id @default(autoincrement())
+  Kunden      Kunden?       @relation(fields: [kundeId], references: [id])
+  kundeId     Int?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }

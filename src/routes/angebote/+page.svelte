@@ -55,7 +55,7 @@
 						<TableBodyCell>{angebot.beschreibung}</TableBodyCell>
 						<TableBodyCell>{angebot.angebotswert}</TableBodyCell>
 						<TableBodyCell>
-							<Button outline size="xs" href={`/angebote/details/${angebot.id}`}>Details</Button>
+							<!-- <Button outline size="xs" href={`/angebote/details/${angebot.id}`}>Details</Button> -->
 						</TableBodyCell>
 					</TableBodyRow>
 				{/each}

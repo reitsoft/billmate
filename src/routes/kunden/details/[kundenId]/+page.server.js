@@ -1,14 +1,16 @@
 import { prisma } from "$lib/server/prisma";
 import { fail, redirect } from "@sveltejs/kit";
-import { superValidate } from "sveltekit-superforms/server";
+import { message, superValidate } from "sveltekit-superforms/server";
 import angebotSchema from "$lib/validation/angebotSchema";
 import angebotNummer from "$lib/utils/angebotNummer";
 
 export const load = async (event) => {
-	const form = await superValidate(event, angebotSchema);
 	return {
-		form,
-		kunde: await prisma.kunden.findUnique({ where: { id: Number(event.params.kundenId) } })
+		form: await superValidate(event, angebotSchema),
+		kunde: await prisma.kunden.findUnique({
+			where: { id: Number(event.params.kundenId) },
+			include: { angebote: true, rechnungen: true }
+		})
 	};
 };
 
@@ -19,7 +21,6 @@ export const actions = {
 		console.log({ id });
 
 		if (!id || !form.valid) {
-			console.log("Keine ID oder keine Form Daten.");
 			return fail(404, { message: "Kunde nicht gefunden." });
 		}
 
@@ -32,8 +33,7 @@ export const actions = {
 				}
 			});
 		} catch (error) {
-			console.error(error);
-			return fail(500, { message: "Etwas ist schief gelaufen." });
+			return message(form, "Etwas ist schief gelaufen.", { message: 500 });
 		}
 
 		const neuesAngebot = await prisma.angebote.findMany({ take: -1 });

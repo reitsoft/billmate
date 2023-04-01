@@ -1,6 +1,6 @@
 import { prisma } from "$lib/server/prisma";
 import { fail, redirect } from "@sveltejs/kit";
-import { superValidate } from "sveltekit-superforms/server";
+import { message, superValidate } from "sveltekit-superforms/server";
 import kundeSchema from "$lib/validation/kundeSchema";
 
 export const load = async (event) => {
@@ -33,7 +33,7 @@ export const actions = {
 			});
 		} catch (error) {
 			console.log(error);
-			return fail(500, "Kundendaten konnten nicht aktualisiert werden.");
+			return message(form, "Kundendaten konnten nicht aktualisiert werden.", { message: 500 });
 		}
 
 		throw redirect(303, "/kunden");
