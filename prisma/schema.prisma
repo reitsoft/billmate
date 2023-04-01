@@ -21,6 +21,7 @@ model Kunden {
   angebote  Angebote[]
   geloescht Boolean    @default(false)
   createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Angebote {
@@ -35,6 +36,9 @@ model Angebote {
   gueltigkeit  DateTime      @default(now())
   zuschlag     Boolean       @default(false)
   abgerechnet  Boolean       @default(false)
+  geloescht    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Komponenten {
@@ -50,6 +54,8 @@ model Komponenten {
   Material         Material?         @relation(fields: [materialId], references: [id])
   materialId       Int?
   anzahl           Int
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 model Dienstleistungen {
@@ -58,6 +64,8 @@ model Dienstleistungen {
   beschreibung String
   stundensatz  String        @default("0.0")
   Komponenten  Komponenten[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Einheiten {
@@ -65,6 +73,7 @@ model Einheiten {
   bezeichnung String
   abkuerzung  String
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Material {
@@ -74,6 +83,7 @@ model Material {
   vpe          String        @default("1")
   einheit      String
   preis        String        @default("0.0")
-  createdAt    DateTime      @default(now())
   Komponenten  Komponenten[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }

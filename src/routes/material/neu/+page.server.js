@@ -1,6 +1,6 @@
 import { prisma } from "$lib/server/prisma";
 import { fail, redirect } from "@sveltejs/kit";
-import { superValidate } from "sveltekit-superforms/server";
+import { message, superValidate } from "sveltekit-superforms/server";
 import materialSchema from "$lib/validation/materialSchema";
 
 export const load = async (event) => {
@@ -24,7 +24,7 @@ export const actions = {
 			});
 		} catch (error) {
 			console.log(error);
-			return fail(500, { message: "Einheit konnte nicht erstellt werden." });
+			return message(form, "Einheit konnte nicht erstellt werden.", { status: 500 });
 		}
 
 		throw redirect(303, "/material");

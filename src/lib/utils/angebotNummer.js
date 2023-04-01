@@ -18,6 +18,6 @@ export default async () => {
 		if (letzteNummerWoche === aktuelleWoche) {
 			neueLaufendeNummer = ("000" + (Number(letzteNummer.slice(-3)) + 1).toString()).slice(-3);
 		}
-		return aktuellesJahr + aktuelleWoche + neueLaufendeNummer;
 	}
+	return aktuellesJahr + aktuelleWoche + neueLaufendeNummer;
 };

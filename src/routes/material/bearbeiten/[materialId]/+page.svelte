@@ -22,6 +22,9 @@
 	<Heading tag="h2">Material bearbeiten</Heading>
 </div>
 
+{#if $message}
+	{$message}
+{:else}
 <form action="?/updateMaterial" method="POST" novalidate use:enhance>
 	<div class="grid gap-x-4 mb-6 grid-cols-12">
 		<div class="col-start-1 col-span-6">
@@ -109,3 +112,4 @@
 	<Button type="submit">Speichern</Button>
 	<Button class="ml-4" color="light" href="/material">Abbrechen</Button>
 </form>
+{/if}

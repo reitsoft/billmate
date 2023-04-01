@@ -8,8 +8,5 @@ export const load = async (event) => {
 		where: { id: Number(event.params.angebotId) },
 		include: { Kunden: true }
 	});
-	return {
-		angebot,
-		// kunde: await prisma.kunden.findUnique({ where: { id: Number(event.params.kundenId) } })
-	};
+	return { angebot };
 };
