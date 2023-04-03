@@ -18,7 +18,6 @@ export const actions = {
 	createAngebot: async (event) => {
 		const form = await superValidate(event, angebotSchema);
 		const id = event.url.searchParams.get("id");
-		console.log({ id });
 
 		if (!id || !form.valid) {
 			return fail(404, { message: "Kunde nicht gefunden." });
@@ -37,6 +36,6 @@ export const actions = {
 		}
 
 		const neuesAngebot = await prisma.angebote.findMany({ take: -1 });
-		throw redirect(303, `/angebote/neu/${neuesAngebot[0].id}`);
+		throw redirect(303, `/angebote/bearbeiten/${neuesAngebot[0].id}`);
 	}
 };

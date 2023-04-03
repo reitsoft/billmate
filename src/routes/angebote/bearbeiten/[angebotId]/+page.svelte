@@ -4,7 +4,6 @@
 
 	const { angebot } = data;
 	const { Kunden: kunde } = data.angebot;
-	console.log({kunde});
 </script>
 
 <Breadcrumb class="mt-8 mb-4">
