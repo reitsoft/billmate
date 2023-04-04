@@ -129,20 +129,6 @@
 			novalidate
 			use:enhance
 		>
-			<!-- <Label class="space-y-2" for="name" color={$errors?.name ? "red" : "base"}>Name</Label>
-		<Input
-			type="text"
-			name="beschreibung"
-			id="beschreibung"
-			placeholder="z.B.: Boden entfernen"
-			color={$errors?.name ? "red" : "base"}
-			bind:value={$form.name}
-			{...$constraints.name}
-			required
-		/>
-		{#if $errors?.name}
-			<Helper class="mt-2" color="red">{$errors.name}</Helper>
-		{/if} -->
 			<Label class="space-y-2" for="beschreibung" color={$errors?.beschreibung ? "red" : "base"}>Beschreibung</Label>
 			<Input
 				type="text"
