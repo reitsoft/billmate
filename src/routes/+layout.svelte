@@ -1,6 +1,8 @@
 <script>
 	import "../app.postcss";
+	import "../style.css"
 	import { page } from "$app/stores";
+	import { fly } from "svelte/transition"
 	import {
 		DarkMode,
 		Navbar,
@@ -13,6 +15,8 @@
 		Chevron,
 		DropdownDivider
 	} from "flowbite-svelte";
+
+	export let data
 
 	$: activeUrl = $page.url.pathname;
 	let darkmodebtn =
@@ -45,5 +49,9 @@
 </div>
 
 <div class="container mx-auto px-sm">
-	<slot />
+	{#key data.url}
+	<div in:fly={{ x: -200, duration: 200, delay: 200 }} out:fly={{ x: 200, duration: 200}}>
+		<slot />
+	</div>
+	{/key}
 </div>
